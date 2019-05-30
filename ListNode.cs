@@ -52,6 +52,13 @@ namespace ListSerialization
             _nodeCollection.Add(node);
         }
 
+        public void SetRand() // проставляем ссылки на случайные элементы в уже заполненном списке
+        {
+            var random = new Random();
+            for (int i = 0; i < _nodeCollection.Count; i++)
+                _nodeCollection[i].Rand = _nodeCollection[random.Next(Count)];
+        }
+
         public void Serialize(FileStream s)
         {
         }
