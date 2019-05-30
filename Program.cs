@@ -32,6 +32,15 @@ namespace ListSerialization
                 fs = new FileStream("data.txt", FileMode.Open);
                 targetList = ListRand.Deserialize(fs);
                 fs.Close();
+
+                for (int i = 0; i < targetList.Count; i++)
+                {
+                    if (targetList[i].Data != sourceList[i].Data
+                     || targetList[i].Rand.Data != sourceList[i].Rand.Data)
+                        throw new Exception("Deserialization has error!");
+                }
+                if (targetList.Tail.Data != sourceList.Tail.Data || targetList.Head.Data != sourceList.Head.Data)
+                    throw new Exception("Deserialization  has error!");
             }
             catch (Exception ex)
             {
