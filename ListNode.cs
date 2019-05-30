@@ -55,15 +55,15 @@ namespace ListSerialization
         public void SetRand() // проставляем ссылки на случайные элементы в уже заполненном списке
         {
             var random = new Random();
-            for (int i = 0; i < _nodeCollection.Count; i++)
-                _nodeCollection[i].Rand = _nodeCollection[random.Next(Count)];
+            foreach(var node in _nodeCollection)
+                node.Rand = _nodeCollection[random.Next(Count)];
         }
 
         public void Serialize(FileStream s)
         {
             using (var w = new StreamWriter(s))
-                for (int i = 0; i < _nodeCollection.Count; i++)
-                    w.WriteLine(_nodeCollection[i].Data + ":" + _nodeCollection.IndexOf(_nodeCollection[i].Rand));
+                foreach (var node in _nodeCollection)
+                    w.WriteLine(node.Data + ":" + _nodeCollection.IndexOf(node.Rand));
         }
 
         public void Deserialize(FileStream s)
