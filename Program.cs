@@ -28,6 +28,10 @@ namespace ListSerialization
                 var fs = new FileStream("data.txt", FileMode.OpenOrCreate);
                 sourceList.Serialize(fs);
                 fs.Close();
+
+                fs = new FileStream("data.txt", FileMode.Open);
+                targetList = ListRand.Deserialize(fs);
+                fs.Close();
             }
             catch (Exception ex)
             {
@@ -37,7 +41,7 @@ namespace ListSerialization
                 Environment.Exit(0);
             }
 
-            Console.WriteLine("Mission complete!");
+            Console.WriteLine("Mission finished!");
             Console.Read();
         }
     }

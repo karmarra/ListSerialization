@@ -61,13 +61,46 @@ namespace ListSerialization
 
         public void Serialize(FileStream s)
         {
+            Console.WriteLine("Serialization...");
+            Console.WriteLine();
+
             using (var w = new StreamWriter(s))
                 foreach (var node in _nodeCollection)
-                    w.WriteLine(node.Data + ":" + _nodeCollection.IndexOf(node.Rand));
+                {
+                    var line = node.Data + ":" + _nodeCollection.IndexOf(node.Rand);
+                    w.WriteLine(line);
+                    Console.WriteLine(line);
+                }
+            Console.WriteLine("Serialization complete!");
+            Console.WriteLine();
         }
 
-        public void Deserialize(FileStream s)
+        public static ListRand Deserialize(FileStream s)
         {
+            var linkList = new List<int>(); // временный список позиций случайных элементов
+            var target = new ListRand();
+
+            using (var sr = new StreamReader(s))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    if (line.Length != 0)
+                    {
+                        var arr = line.Split(':');
+                        target.Add(arr[0]);
+                        linkList.Add(Convert.ToInt32(arr[1]));
+                    }
+                }
+            }
+
+            for (int i = 0; i < target.Count; i++)
+                target[i].Rand = target[linkList[i]];
+
+            Console.WriteLine("Deserialization complete!");
+            Console.WriteLine();
+
+            return target;
         }
 
         public ListNode this[int index] //индексатор
