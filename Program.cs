@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,23 @@ namespace ListSerialization
             sourceList.Add("шестой элемент");
 
             sourceList.SetRand();
+
+            try
+            {
+                var fs = new FileStream("data.txt", FileMode.OpenOrCreate);
+                sourceList.Serialize(fs);
+                fs.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Press any key..");
+                Console.Read();
+                Environment.Exit(0);
+            }
+
+            Console.WriteLine("Mission complete!");
+            Console.Read();
         }
     }
 }

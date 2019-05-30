@@ -61,6 +61,9 @@ namespace ListSerialization
 
         public void Serialize(FileStream s)
         {
+            using (var w = new StreamWriter(s))
+                for (int i = 0; i < _nodeCollection.Count; i++)
+                    w.WriteLine(_nodeCollection[i].Data + ":" + _nodeCollection.IndexOf(_nodeCollection[i].Rand));
         }
 
         public void Deserialize(FileStream s)
